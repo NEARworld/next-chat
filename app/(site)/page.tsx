@@ -6,8 +6,9 @@ export default function Home() {
     <div
       className='
       flex
+      flex-col
+      justify-center
       min-h-full
-      items-center
       bg-gray-100
       '
     >
