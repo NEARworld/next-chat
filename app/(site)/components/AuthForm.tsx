@@ -1,4 +1,5 @@
 'use client';
+import Input from '@/app/components/Input';
 import { useCallback, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
@@ -39,5 +40,13 @@ export default function AuthForm() {
     setIsLoading(true);
   };
 
-  return <div></div>;
+  return (
+    <div className='mt-8 mx-auto w-full max-w-md'>
+      <div className='bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10'>
+        <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
+          <Input label='email' id='email' register={register} errors={errors} />
+        </form>
+      </div>
+    </div>
+  );
 }
