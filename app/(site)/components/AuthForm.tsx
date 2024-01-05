@@ -30,7 +30,6 @@ export default function AuthForm() {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (e) => {
-    e.preventDefault();
     setIsLoading(true);
     if (variant === 'REGISTER') {
     } // axios register
