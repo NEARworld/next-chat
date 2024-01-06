@@ -98,18 +98,19 @@ export default function AuthForm() {
                 소셜 계정 이용하기
               </span>
             </div>
-
-            <div className='mt-6 flex gap-2'>
-              <AuthSocialButton
-                icon={BsGithub}
-                onClick={() => socialAction('github')}
-              />
-              <AuthSocialButton
-                icon={BsGoogle}
-                onClick={() => socialAction('google')}
-              />
-            </div>
           </div>
+
+          <div className='mt-6 flex gap-2'>
+            <AuthSocialButton
+              icon={BsGithub}
+              onClick={() => socialAction('github')}
+            />
+            <AuthSocialButton
+              icon={BsGoogle}
+              onClick={() => socialAction('google')}
+            />
+          </div>
+
           <div
             className='
             flex 
