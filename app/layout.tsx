@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import ToastContext from './context/ToastContext';
 
 export const metadata: Metadata = {
   title: 'Messenger Clone',
@@ -13,7 +14,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body>{children}</body>
+      <body>
+        <ToastContext />
+        {children}
+      </body>
     </html>
   );
 }

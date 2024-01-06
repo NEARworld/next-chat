@@ -6,6 +6,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import AuthSocialButton from './AuthSocialButton';
 import { BsGithub, BsGoogle } from 'react-icons/bs';
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 type Variant = 'LOGIN' | 'REGISTER';
 
@@ -33,7 +34,9 @@ export default function AuthForm() {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
     if (variant === 'REGISTER') {
-      axios.post('/api/register', data);
+      axios
+        .post('/api/register', data)
+        .catch((e) => toast.error('invalid request'));
     }
     if (variant === 'LOGIN') {
       // NextAuth SignIn
