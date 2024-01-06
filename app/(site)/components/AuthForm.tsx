@@ -15,12 +15,8 @@ export default function AuthForm() {
   const [variant, setVariant] = useState<Variant>('LOGIN');
   const [isLoading, setIsLoading] = useState(false);
 
-  const toggleVariant = useCallback(() => {
-    if (variant === 'LOGIN') setVariant('REGISTER');
-    else setVariant('LOGIN');
-  }, [variant]);
-
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -31,6 +27,12 @@ export default function AuthForm() {
       password: '',
     },
   });
+
+  const toggleVariant = useCallback(() => {
+    if (variant === 'LOGIN') setVariant('REGISTER');
+    else setVariant('LOGIN');
+    reset();
+  }, [variant, reset]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
@@ -57,8 +59,19 @@ export default function AuthForm() {
     }
   };
 
-  const socialAction = (action: string) => {
+  const socialAction = (provider: string) => {
     setIsLoading(true);
+
+    signIn(provider, { redirect: false })
+      .then((res) => {
+        if (res?.error) {
+          toast.error('로그인에 문제가 있습니다');
+        }
+        if (res?.ok) {
+          toast.success('로그인 완료');
+        }
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
