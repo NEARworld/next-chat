@@ -36,7 +36,8 @@ export default function AuthForm() {
     if (variant === 'REGISTER') {
       axios
         .post('/api/register', data)
-        .catch((e) => toast.error('invalid request'));
+        .catch((e) => toast.error('invalid request'))
+        .finally(() => setIsLoading(false));
     }
     if (variant === 'LOGIN') {
       // NextAuth SignIn
