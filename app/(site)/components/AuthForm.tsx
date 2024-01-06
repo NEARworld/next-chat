@@ -53,7 +53,7 @@ export default function AuthForm() {
         <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
           {variant === 'REGISTER' && (
             <Input
-              label='Name'
+              label='닉네임'
               id='name'
               register={register}
               errors={errors}
@@ -61,14 +61,14 @@ export default function AuthForm() {
             />
           )}
           <Input
-            label='Email Address'
+            label='이메일'
             id='email'
             register={register}
             errors={errors}
             disabled={isLoading}
           />
           <Input
-            label='Password'
+            label='비밀번호'
             id='password'
             type='password'
             register={register}
@@ -77,7 +77,7 @@ export default function AuthForm() {
           />
           <div>
             <Button disabled={isLoading} fullWidth type='submit'>
-              {variant === 'LOGIN' ? 'Sign in' : 'Register'}
+              {variant === 'LOGIN' ? '로그인' : '회원가입'}
             </Button>
           </div>
         </form>
@@ -95,7 +95,7 @@ export default function AuthForm() {
 
             <div className='relative flex justify-center text-sm'>
               <span className='bg-white px-2 text-gray-500'>
-                Or continue with
+                소셜 계정 이용하기
               </span>
             </div>
 
@@ -121,12 +121,10 @@ export default function AuthForm() {
             text-gray-500'
           >
             <div>
-              {variant === 'LOGIN'
-                ? 'New to messenger?'
-                : 'Already have an account?'}
+              {variant === 'LOGIN' ? '처음이신가요?' : '이미 회원이신가요?'}
             </div>
             <div onClick={toggleVariant} className='underline cursor-pointer'>
-              {variant === 'LOGIN' ? 'Create an account' : 'Login'}
+              {variant === 'LOGIN' ? '회원가입' : '로그인'}
             </div>
           </div>
         </div>

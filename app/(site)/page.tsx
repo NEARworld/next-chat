@@ -30,7 +30,7 @@ export default function Home() {
             text-gray-900
           '
         >
-          Sign in to your account
+          넥스트 채팅앱
         </h2>
       </div>
       <AuthForm />
