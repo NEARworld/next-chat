@@ -7,6 +7,7 @@ import AuthSocialButton from './AuthSocialButton';
 import { BsGithub, BsGoogle } from 'react-icons/bs';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { signIn } from 'next-auth/react';
 
 type Variant = 'LOGIN' | 'REGISTER';
 
@@ -40,7 +41,19 @@ export default function AuthForm() {
         .finally(() => setIsLoading(false));
     }
     if (variant === 'LOGIN') {
-      // NextAuth SignIn
+      signIn('credentials', {
+        ...data,
+        redirect: false,
+      })
+        .then((res) => {
+          if (res?.error) {
+            toast.error('로그인에 문제가 있습니다');
+          }
+          if (res?.ok) {
+            toast.success('로그인 완료');
+          }
+        })
+        .finally(() => setIsLoading(false));
     }
   };
 
