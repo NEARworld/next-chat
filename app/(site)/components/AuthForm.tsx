@@ -8,6 +8,7 @@ import { BsGithub, BsGoogle } from 'react-icons/bs';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 type Variant = 'LOGIN' | 'REGISTER';
 
@@ -15,12 +16,13 @@ export default function AuthForm() {
   const [variant, setVariant] = useState<Variant>('LOGIN');
   const [isLoading, setIsLoading] = useState(false);
   const session = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     if (session.status === 'authenticated') {
-      console.log(session.status);
+      router.push('/users');
     }
-  }, [session.status]);
+  }, [session.status, router]);
 
   const {
     reset,
