@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren } from 'react';
 import Sidebar from '../components/sidebar/Sidebar';
 import getUsers from '../actions/getUsers';
-import UserList from './UserList';
+import UserList from './components/UserList';
 
 const layout: FC<PropsWithChildren> = async ({ children }) => {
   const users = await getUsers();
