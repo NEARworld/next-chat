@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren } from 'react';
-import Sidebar from './sidebar/Sidebar';
+import Sidebar from '../components/sidebar/Sidebar';
 
 const layout: FC<PropsWithChildren> = async ({ children }) => {
   return (
