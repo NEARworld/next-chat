@@ -43,6 +43,9 @@ const UserBox: FC<Props> = ({ user }) => {
         cursor-pointer '
     >
       <Avatar user={user} />
+      <div className='mb-1'>
+        <p className='text-sm font-medium text-gray-900'>{user.name}</p>
+      </div>
     </div>
   );
 };
