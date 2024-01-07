@@ -1,3 +1,4 @@
+'use client';
 import { HiArrowLeftOnRectangle } from 'react-icons/hi2';
 import { HiChat, HiUsers } from 'react-icons/hi';
 import { usePathname } from 'next/navigation';
