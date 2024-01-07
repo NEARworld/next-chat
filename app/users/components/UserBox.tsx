@@ -1,14 +1,34 @@
 'use client';
+import Avatar from '@/app/components/Avatar';
 import { User } from '@prisma/client';
-import { FC } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { FC, useCallback, useState } from 'react';
 
 type Props = {
   user: User;
 };
 
 const UserBox: FC<Props> = ({ user }) => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const requestConversation = useCallback(() => {
+    setIsLoading(true);
+
+    axios
+      .post('/api/conversations', {
+        userId: user.id,
+      })
+      .then((data) => {
+        router.push(`/conversations/${data.data.id}`);
+      })
+      .finally(() => setIsLoading(false));
+  }, [user, router]);
+
   return (
     <div
+      onClick={requestConversation}
       className='
         w-full 
         relative 
@@ -22,7 +42,7 @@ const UserBox: FC<Props> = ({ user }) => {
         transition 
         cursor-pointer '
     >
-      {/* <Avatar user={user} /> */}
+      <Avatar user={user} />
     </div>
   );
 };
