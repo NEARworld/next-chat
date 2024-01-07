@@ -1,5 +1,6 @@
 import { User } from '@prisma/client';
 import { FC } from 'react';
+import UserBox from './UserBox';
 
 type Props = {
   users: User[];
@@ -26,10 +27,9 @@ const UserList: FC<Props> = ({ users }) => {
       <div className='px-5'>
         <div className='flex-col'>
           <div className='text-2xl font-bold text-neutral-800 py-4'>
-            {/* {users.map((user) => (
-              <div key={user.id}>{user.name}</div>
-            ))} */}
-            people
+            {users.map((user) => (
+              <UserBox key={user.id} user={user} />
+            ))}
           </div>
         </div>
       </div>
