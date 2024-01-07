@@ -70,18 +70,12 @@ export default function AuthForm() {
     }
   };
 
-  const socialAction = (provider: string) => {
+  const socialAction = async (provider: string) => {
     setIsLoading(true);
 
     signIn(provider, { redirect: false })
-      .then((res) => {
-        if (res?.error) {
-          toast.error('로그인에 문제가 있습니다');
-        }
-        if (res?.ok) {
-          toast.success('로그인 완료');
-        }
-      })
+      .then(() => toast.success('로그인 완료'))
+      .catch(() => toast.error('로그인 실패'))
       .finally(() => setIsLoading(false));
   };
 
