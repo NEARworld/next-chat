@@ -9,7 +9,9 @@
 ## 화면
 
 ### 로그인
-<img width="1725" alt="image" src="https://github.com/NEARworld/next-messenger/assets/102969108/d47bf7d5-a8d3-4c89-b82e-fe24a3c7ad08">
+<img width="1725" alt="image" src="https://github.com/NEARworld/next-messenger/assets/102969108/f2b3c615-090f-4e33-bed6-1e409a9d59cf">
+
 
 ### 회원가입
-<img width="1725" alt="image" src="https://github.com/NEARworld/next-messenger/assets/102969108/d355aee2-5361-4be0-ba0c-9733c652155e">
+<img width="1725" alt="image" src="https://github.com/NEARworld/next-messenger/assets/102969108/fbe7c5b4-7ffd-45a3-8b9c-0ceddf59e2e6">
+
