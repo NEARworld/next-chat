@@ -1,7 +1,7 @@
 # 넥스트 메신저
 
 ## 배포
-?
+https://next-messenger-nearworld.vercel.app
 ## 스택
 | FE | tailwindcss | clsx | react-icons | react-hook-form | axios |
 | --- | --- | --- | --- | --- | --- |
