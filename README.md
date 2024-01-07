@@ -1,5 +1,11 @@
 # 넥스트 채팅앱
 
+## 배포
+?
+## 스택
+| FE | tailwindcss | clsx | react-icons | react-hook-form | axios |
+| --- | --- | --- | --- | --- | --- |
+| BE | prisma | next-auth | bcrypt |
 ## 화면
 
 ### 로그인
