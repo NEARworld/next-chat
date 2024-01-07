@@ -62,6 +62,7 @@ export default function AuthForm() {
           }
           if (res?.ok) {
             toast.success('로그인 완료');
+            router.push('/users');
           }
         })
         .finally(() => setIsLoading(false));
