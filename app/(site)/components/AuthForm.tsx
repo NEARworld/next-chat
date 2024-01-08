@@ -1,7 +1,7 @@
 'use client';
 import Button from '@/app/components/Button';
 import Input from '@/app/components/inputs/Input';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import AuthSocialButton from './AuthSocialButton';
 import { BsGithub, BsGoogle } from 'react-icons/bs';
@@ -15,14 +15,7 @@ type Variant = 'LOGIN' | 'REGISTER';
 export default function AuthForm() {
   const [variant, setVariant] = useState<Variant>('LOGIN');
   const [isLoading, setIsLoading] = useState(false);
-  const session = useSession();
   const router = useRouter();
-
-  useEffect(() => {
-    if (session.status === 'authenticated') {
-      router.push('/users');
-    }
-  }, [session.status, router]);
 
   const {
     reset,
