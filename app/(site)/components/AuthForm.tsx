@@ -5,7 +5,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import AuthSocialButton from './AuthSocialButton';
 import { BsGithub, BsGoogle } from 'react-icons/bs';
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 import { toast } from 'react-hot-toast';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -23,7 +23,8 @@ import {
   fieldDetails,
   fieldNamesLogin,
   fieldNamesRegister,
-  formSchema,
+  formSchemaLogin,
+  formSchemaRegister,
 } from '@/lib/utils';
 
 export default function AuthForm() {
@@ -31,9 +32,13 @@ export default function AuthForm() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<
+    z.infer<typeof formSchemaRegister | typeof formSchemaLogin>
+  >({
     mode: 'onChange',
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(
+      variant === 'LOGIN' ? formSchemaLogin : formSchemaRegister
+    ),
     defaultValues: {
       name: '',
       email: '',
@@ -50,11 +55,15 @@ export default function AuthForm() {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
+
     if (variant === 'REGISTER') {
       axios
         .post('/api/register', data)
         .then(() => signIn('credentials', data))
-        .catch((e) => toast.error('invalid request'))
+        .catch((e) => {
+          if (isAxiosError(e)) toast.error(e.response?.data);
+          else toast.error('네트워크 오류');
+        })
         .finally(() => setIsLoading(false));
     }
     if (variant === 'LOGIN') {
@@ -63,14 +72,13 @@ export default function AuthForm() {
         redirect: false,
       })
         .then((res) => {
-          if (res?.error) {
-            toast.error('로그인에 문제가 있습니다');
-          }
+          if (res?.error) toast.error(res.error);
           if (res?.ok) {
             toast.success('로그인 완료');
             router.push('/users');
           }
         })
+        .catch((e) => console.log(e))
         .finally(() => setIsLoading(false));
     }
   };

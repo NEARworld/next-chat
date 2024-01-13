@@ -18,7 +18,16 @@ export const fieldNamesLogin: (keyof Omit<FormFields, 'name' | 'confirm'>)[] = [
   'password',
 ];
 
-export const formSchema = z
+export const formSchemaLogin = z.object<Pick<FormSchema, 'email' | 'password'>>(
+  {
+    email: z.string().email('유효하지 않은 이메일입니다.'),
+    password: z
+      .string()
+      .min(8, '8글자 이상이어야 합니다.')
+      .max(16, '16글자까지 가능합니다.'),
+  }
+);
+export const formSchemaRegister = z
   .object<FormSchema>({
     name: z
       .string()

@@ -1,7 +1,5 @@
 import bcrypt from 'bcrypt';
-
 import { AuthOptions } from 'next-auth';
-
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
@@ -27,38 +25,30 @@ const authOptions: AuthOptions = {
         password: { label: 'password', type: 'password' },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error('Invalid Credentials');
-        }
+        if (!credentials?.email || !credentials?.password)
+          throw new Error('이메일과 비밀번호를 입력해주세요');
 
         const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
+          where: { email: credentials.email },
         });
 
-        if (!user || !user?.hashedPassword) {
-          throw new Error('Invalid Credentials');
-        }
+        if (!user || !user?.hashedPassword)
+          throw new Error('존재하지 않는 계정입니다');
 
         const isCorrectPassword = await bcrypt.compare(
           credentials.password,
           user.hashedPassword
         );
 
-        if (!isCorrectPassword) {
-          throw new Error('Invalid credentials');
-        }
+        if (!isCorrectPassword) throw new Error('비밀번호가 일치하지 않습니다');
 
         return user;
       },
     }),
   ],
-  debug: process.env.NODE_ENV === 'development',
-  session: {
-    strategy: 'jwt',
-  },
+  session: { strategy: 'jwt' },
   secret: process.env.NEXTAUTH_SECRET,
+  debug: process.env.NODE_ENV === 'development',
 };
 
 export default authOptions;
