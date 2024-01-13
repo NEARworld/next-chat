@@ -1,40 +1,52 @@
 'use client';
 import Button from '@/app/components/Button';
-import Input from '@/app/components/inputs/Input';
 import { useCallback, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import AuthSocialButton from './AuthSocialButton';
 import { BsGithub, BsGoogle } from 'react-icons/bs';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-
-type Variant = 'LOGIN' | 'REGISTER';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import {
+  z,
+  fieldDetails,
+  fieldNamesLogin,
+  fieldNamesRegister,
+  formSchema,
+} from '@/lib/utils';
 
 export default function AuthForm() {
   const [variant, setVariant] = useState<Variant>('LOGIN');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const {
-    reset,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FieldValues>({
+  const form = useForm<z.infer<typeof formSchema>>({
+    mode: 'onChange',
+    resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
       email: '',
       password: '',
+      confirm: '',
     },
   });
 
   const toggleVariant = useCallback(() => {
     if (variant === 'LOGIN') setVariant('REGISTER');
     else setVariant('LOGIN');
-    reset();
-  }, [variant, reset]);
+    form.reset();
+  }, [variant, form]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
@@ -75,37 +87,34 @@ export default function AuthForm() {
   return (
     <div className='mt-8 mx-auto w-full max-w-md'>
       <div className='bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10'>
-        <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
-          {variant === 'REGISTER' && (
-            <Input
-              label='닉네임'
-              id='name'
-              register={register}
-              errors={errors}
-              disabled={isLoading}
-            />
-          )}
-          <Input
-            label='이메일'
-            id='email'
-            register={register}
-            errors={errors}
-            disabled={isLoading}
-          />
-          <Input
-            label='비밀번호'
-            id='password'
-            type='password'
-            register={register}
-            errors={errors}
-            disabled={isLoading}
-          />
-          <div>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            {(variant === 'LOGIN' ? fieldNamesLogin : fieldNamesRegister).map(
+              (fieldName) => (
+                <FormField
+                  key={fieldName}
+                  control={form.control}
+                  name={fieldName}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{fieldDetails[fieldName].label}</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder={fieldDetails[fieldName].placeholder}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )
+            )}
             <Button disabled={isLoading} fullWidth type='submit'>
               {variant === 'LOGIN' ? '로그인' : '회원가입'}
             </Button>
-          </div>
-        </form>
+          </form>
+        </Form>
 
         <div className='mt-6'>
           <div className='relative'>
